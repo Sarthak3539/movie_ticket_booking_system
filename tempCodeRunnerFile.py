@@ -1,1 +1,2 @@
-PRIMARY KEY
+conn.commit()
+        conn.close()
