@@ -2,13 +2,15 @@ import sqlite3
 
 class User:
 
-    def __init__(self, name, email, phone_number ,password):
+    # Initialise class
+    def __init__(self, name, email, phone_number ,password): 
         self.name = name
         self.email = email
         self.password = password
         self.phone_number = phone_number
-        
-    def add_user(self):
+    
+    # User functions
+    def add_user(self): 
         
         conn = sqlite3.connect('User.db')
         cursor = conn.cursor()
@@ -25,11 +27,14 @@ class User:
         conn.close()
 
 class Login:
-    def __init__(self,email,cur_pass):
+
+    # Initialse class
+    def __init__(self,email,cur_pass): 
         self.email=email
         self.cur_pass=cur_pass
 
-    def login(self):
+    # User functions
+    def login(self): 
         conn = sqlite3.connect('User.db')
         cursor = conn.cursor()
         cursor.execute("SELECT password FROM User WHERE email=?",(self.email,))
@@ -38,11 +43,8 @@ class Login:
             print("Login Sucessful")
         else :
             print("Invalid Credentials")
-
-    def display_user_info():
-        print("details are showed below:")
         
-
+# Main
 a=User("gazal","fljs",434,"42z#342")
 a.add_user()
 

@@ -2,10 +2,12 @@ import sqlite3
 
 class Movie:
 
+    # Initialise class
     def __init__(self, movies, movie_duration):
         self.movies = movies
         self.movie_duration = movie_duration
-        
+    
+    # Admin functions
     def add_movie(self):
         
         conn = sqlite3.connect('User.db')
@@ -22,36 +24,47 @@ class Movie:
         conn.commit()
         conn.close()
 
+    def remove_movie(self):
+        rem_movie=input("Enter movie name to be removed:\n") #admin 
 
-movies = [
-    # Bollywood Movies
-    "3 Idiots", "Sholay", "Dilwale Dulhania Le Jayenge", "Zindagi Na Milegi Dobara",
-    "Kabhi Khushi Kabhie Gham", "Lagaan", "Taare Zameen Par", "Gully Boy",
-    "PK", "Dangal", "Chak De! India", "Queen", "Andhadhun", "Drishyam",
-    "Kal Ho Naa Ho", "Black", "Barfi!", "Bajirao Mastani", "Padmaavat",
-    "Uri: The Surgical Strike", "Gangs of Wasseypur", "Munna Bhai M.B.B.S.",
-    "Sanju", "Kahaani", "Badhaai Ho", "Rang De Basanti", "Koi... Mil Gaya",
-    "War", "Raazi", "Dear Zindagi", "Bhool Bhulaiyaa 2", "Jaane Bhi Do Yaaro",
+        conn = sqlite3.connect('User.db')
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM movie WHERE movie_name LIKE ? COLLATE NOCASE;\n", (rem_movie,))
+        cursor.execute("SELECT movie_name FROM movie")
+        movie_list = cursor.fetchall()
+        print("Movie removed\n",movie_list)
+        conn.commit()
+        conn.close()
 
-    # Hollywood Movies
-    "The Shawshank Redemption", "The Godfather", "Inception", "Titanic",
-    "Avatar", "The Dark Knight", "The Lion King", "Interstellar", 
-    "Pulp Fiction", "Fight Club", "The Matrix", "Forrest Gump", 
-    "Avengers: Endgame", "The Avengers", "Joker", "The Wolf of Wall Street",
-    "Gladiator", "The Prestige", "The Social Network", "The Grand Budapest Hotel",
-    "Gone Girl", "Inglourious Basterds", "The Silence of the Lambs", 
-    "Saving Private Ryan", "Schindler's List", "Goodfellas", "Se7en",
-    "The Departed", "Braveheart", "The Truman Show", "The Green Mile",
+    # User functions
+    def display_movie(self):
+        conn = sqlite3.connect('User.db')
+        cursor = conn.cursor()
 
-    # Tollywood Movies
-    "RRR", "Baahubali: The Beginning", "Baahubali: The Conclusion",
-    "Pushpa: The Rise", "Arjun Reddy", "Geetha Govindam", "Ala Vaikunthapurramuloo",
-    "Magadheera", "Eega", "Mahanati", "Gabbar Singh", "Sarileru Neekevvaru",
-    "Srimanthudu", "Bharat Ane Nenu", "Athadu", "Julayi", "Fidaa",
-    "Temper", "Yevadu", "Dookudu", "Legend", "Businessman", "Arya",
-    "Arya 2", "Chhatrapati", "Manam", "Oopiri", "Rangasthalam",
-    "Kshanam", "Nannaku Prematho", "Vedam", "Jersey", "Bheeshma"
-]
+        cursor.execute("SELECT * FROM movie")
+        movie_list = cursor.fetchall()
+
+        Flg=False
+
+        while Flg==False:
+            movies_dict = {i + 1: movie[1] for i, movie in enumerate(movie_list)}
+            print("Select your movie, we are currently showing:\n",movies_dict)
+            m=int(input("Enter the movie number:"))
+            
+            if m>len(movies_dict):
+                print("Enter a valid choice")
+            else :
+                print("Redirect to next page")
+                Flg=True
+        conn.close()
+      
+# Main   
+movies = ["Gully Boy","Dangal", "Queen", "Inception", "Titanic","Avatar", "RRR", "Pushpa: The Rise", "Arjun Reddy"]
+
 a=Movie(movies,"2")
-a.add_movie()
-print(movies)
+# a.add_movie() #Admin function
+#a.remove_movie() #Admin function
+a.display_movie()
+
+
+
