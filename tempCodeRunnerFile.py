@@ -1,2 +1,1 @@
-conn.commit()
-        conn.close()
+            print("Select your timeslot:\n")
