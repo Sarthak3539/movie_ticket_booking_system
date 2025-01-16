@@ -26,3 +26,7 @@ class Booking:
 
 a=Booking("DCE4FD4F096AE261F59347B1BD28C074",1,"5.6")
 a.display_booking()
+
+
+def booking_object(user_id, movie_details_id,seat_booked):
+    return Theatre(user_id, movie_details_id,seat_booked)

@@ -1,11 +1,12 @@
 import sqlite3
-
-
 class City:
-    def __init__(self, city_names):
+
+    # Initialise class
+    def __init__(self, city_names): 
         self.city_names = city_names
 
-    def add_city(self):
+    # Admin functions
+    def add_city(self): 
         conn = sqlite3.connect("User.db")
         cursor = conn.cursor()
         cursor.execute("""
@@ -22,25 +23,28 @@ class City:
                 print(f"Could not insert {city_name}: {e}")
         conn.close()
 
-city_names = [
-    "Ahmedabad", "Aligarh", "Ambala", "Amravati", "Amritsar", "Anand", "Bangalore", "Bareilly",
-    "Bhopal", "Bhubaneswar", "Bikaner", "Bilaspur", "Chandigarh", "Chennai", "Coimbatore",
-    "Dehradun", "Delhi", "Dhanbad", "Dharamsala", "Durg", "Faridabad", "Gandhinagar", "Ghaziabad",
-    "Gurgaon", "Guwahati", "Gwalior", "Haldwani", "Haridwar", "Hyderabad", "Indore", "Jabalpur",
-    "Jaipur", "Jalandhar", "Jammu", "Jamshedpur", "Jodhpur", "Kanpur", "Kolhapur", "Kolkata", "Kota",
-    "Lucknow", "Ludhiana", "Madurai", "Mangalore", "Meerut", "Mumbai", "Mysuru", "Nagpur", "Nashik",
-    "Noida", "Patna", "Pune", "Raipur", "Rajkot", "Ranchi", "Rishikesh", "Surat", "Thane", "Udaipur",
-    "Vadodara", "Varanasi", "Vijayawada", "Visakhapatnam", "Warangal", "Agra", "Aurangabad", "Bhopal",
-    "Bhubaneswar", "Chidambaram", "Dibrugarh", "Erode", "Gandhinagar", "Guntur", "Hoshiarpur", "Howrah",
-    "Imphal", "Jalandhar", "Jind", "Jodhpur", "Kakinada", "Kannur", "Kochi", "Kota", "Kottayam",
-    "Krishnanagar", "Latur", "Madurai", "Malda", "Manipal", "Mathura", "Meerut", "Moga", "Moradabad",
-    "Muzaffarnagar", "Nanded", "Nainital", "Palakkad", "Panaji", "Patiala", "Pudukottai", "Rajahmundry",
-    "Raipur", "Ranchi", "Shimla", "Siliguri", "Surat", "Thiruvananthapuram", "Udupi", "Vadodara",
-    "Vellore", "Visakhapatnam", "Warangal", "Durgapur", "Gaya", "Kanpur", "Kollam", "Mangalore",
-    "Moradabad", "Nadiad", "Namakkal", "Nellore", "Palakkad", "Patan", "Ratlam", "Rourkela", "Salem",
-    "Sikar", "Solapur", "Sonipat", "Surat", "Thane", "Tumkur", "Udaipur", "Vadodara", "Varanasi",
-    "Vellore", "Visakhapatnam", "Yavatmal",
-]
+    # User functions
+    def display_city(self): 
+        print("Enter your city:")
+        c=input()
+        conn = sqlite3.connect('User.db')
+        cursor = conn.cursor()
+        result = cursor.execute('''SELECT COUNT(*) FROM city WHERE city_name LIKE ? COLLATE NOCASE;''', (c,))
+        count = result.fetchone()[0]  
+        if count>0:
+            print()
+        else:
+            print("City is not exist. Please enter a valid city.")
+            exit()
 
-a = City(city_names)
-a.add_city()
+# Main
+# city_names=[]
+
+# a = City(city_names)
+# a.add_city()
+
+# b=City([])
+# b.display_city()
+
+def City_object(city_names):
+    return City(city_names)
