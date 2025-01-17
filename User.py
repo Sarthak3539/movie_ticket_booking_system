@@ -1,4 +1,5 @@
 import sqlite3
+import re
 
 class User:
     # Initialize class
@@ -12,6 +13,8 @@ class User:
     def add_user(self): 
         conn = sqlite3.connect('User.db')
         cursor = conn.cursor()
+        # regex add of email
+
         cursor.execute('''CREATE TABLE IF NOT EXISTS user (
             user_id TEXT PRIMARY KEY DEFAULT (hex(randomblob(16))),
             email TEXT UNIQUE, 
@@ -54,6 +57,7 @@ class Login:
                 print("Invalid Credentials\n")
         else:
             print("User not found\n")
+            exit()
 
         conn.close()
         
