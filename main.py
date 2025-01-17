@@ -48,9 +48,9 @@ while flg==False:
         else:
             print("Incorrect choice1\n")
     
-c=City_object([])        
+c=City_object([])
 c.display_city()
-        
+    
 d=Movie_object([],2)
 d.display_movie()
         
